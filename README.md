@@ -96,11 +96,11 @@ Feature toggles (defaults in parentheses):
 | `/back` `/b`           | Undo last exchange                 |
 | `/h [n]`               | Enable CoT with last _n_ exchanges |
 | `/d`                   | Disable CoT                        |
-| `/min N`               | Set min_new_tokens                 |
-| `/max N`               | Set max_new_tokens                 |
+| `/min VAL`             | Set min_new_tokens                 |
+| `/max VAL`             | Set max_new_tokens                 |
 | `/temp` or `/t VAL`    | Set temperature                    |
 | `/p VAL`               | Set top_p                          |
-| `/k N`                 | Set top_k                          |
+| `/k VAL`               | Set top_k                          |
 | `/params`              | Show current generation parameters |
 
 ---
