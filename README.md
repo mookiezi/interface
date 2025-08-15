@@ -1,6 +1,6 @@
 # Discord-Micae Model Chat Interface
 
-A Python-based interactive CLI interface for chatting with Hugging Face language models, optimized for casual, Discord-style conversation.  
+A Python-based interactive CLI interface for chatting with Hugging Face language models, optimized for casual, Discord-style conversation using ChatML.
 Supports both quantized and full-precision models, optional Chain-of-Thought (CoT) context, live token streaming with color formatting, and dynamic generation parameter adjustment.
 
 ---
