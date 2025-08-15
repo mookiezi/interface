@@ -5,7 +5,7 @@ Supports both quantized and full-precision models, optional Chain-of-Thought (Co
 
 ---
 
-![Interface](interface.png)
+![Interface](interface-screenshot.png)
 
 ---
 
