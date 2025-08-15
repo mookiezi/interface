@@ -108,5 +108,3 @@ Feature toggles (defaults in parentheses):
 ## License
 
 MIT License
-
-```
