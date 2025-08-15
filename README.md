@@ -94,27 +94,14 @@ Feature toggles (defaults in parentheses):
 | ---------------------- | ---------------------------------- |
 | `/clear` `/reset` `/c` | Clear conversation history         |
 | `/back` `/b`           | Undo last exchange                 |
-| `/h [n]`               | Enable CoT with last _n_ exchanges |
+| `/h VAL`               | Enable CoT with last _VAL_ exchanges |
 | `/d`                   | Disable CoT                        |
-| `/min VAL`             | Set min_new_tokens                 |
-| `/max VAL`             | Set max_new_tokens                 |
-| `/temp` or `/t VAL`    | Set temperature                    |
-| `/p VAL`               | Set top_p                          |
-| `/k VAL`               | Set top_k                          |
+| `/min VAL`             | Set min_new_tokens to _VAL_        |
+| `/max VAL`             | Set max_new_tokens to _VAL_        |
+| `/temp` or `/t VAL`    | Set temperature to _VAL_           |
+| `/p VAL`               | Set top_p to _VAL_                 |
+| `/k VAL`               | Set top_k to _VAL_                 |
 | `/params`              | Show current generation parameters |
-
----
-
-## Example Output
-
-```
-🚀 Model launched.
-[Params] min=1 | max=63 | temp=0.72 | p=0.85 | k=50
-<|im_start|>user
-hello<|im_end|>
-<|im_start|>assistant
-hi there<|im_end|>
-```
 
 ---
 
