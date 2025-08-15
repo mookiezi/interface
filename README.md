@@ -90,27 +90,6 @@ Feature toggles (defaults in parentheses):
 
 ---
 
-## Examples
-
-```bash
-# Default run (ChatML, quantized 4-bit, CoT enabled)
-python interface.py -m mookiezi/Discord-Micae-8B-Preview
-
-# Run in DeepHermes mode without quantization
-python interface.py -m mymodel --deephermes --quantization=False --bnb-4bit=False
-
-# Use GGUF format model with custom chat format
-python interface.py -m /path/to/model.gguf --gguf --gguf-chat-format alpaca
-
-# Disable all system prompts
-python interface.py --no-system-prompt --no-assistant-prompt
-
-# Strictly blank mode (raw input, no prompts)
-python interface.py --blank
-```
-
----
-
 ## Commands
 
 | Command                | Description                        |
