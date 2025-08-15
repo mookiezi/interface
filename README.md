@@ -40,15 +40,13 @@ Supports both quantized and full-precision models, optional Chain-of-Thought (Co
 
 ## Installation
 
-```bash
+```
 pip install torch transformers peft bitsandbytes prompt_toolkit rich
 ```
 
-````
-
 If using GGUF (llama.cpp models):
 
-```bash
+```
 pip install llama-cpp-python
 ```
 
@@ -56,7 +54,7 @@ pip install llama-cpp-python
 
 ## CLI Arguments (with defaults)
 
-```text
+```
 usage: interface.py [-h] [-c] [-m MODEL]
                     [--deephermes] [--gguf] [--gguf-chat-format FORMAT]
                     [--blank] [--assistant-system-combo] [--assistant-system]
