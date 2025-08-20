@@ -122,11 +122,11 @@ Feature toggles (defaults in parentheses):
 | `/back` `/b`            | Undo last user+assistant exchange and preview recent history                |
 | `/h VAL`                | Enable Chain-of-Thought with last _VAL_ exchanges (default: all available)  |
 | `/d`                    | Disable Chain-of-Thought                                                    |
-| `/min VAL`              | Set **min_new_tokens** to _VAL_                                             |
-| `/max VAL`              | Set **max_new_tokens** to _VAL_                                             |
-| `/temp VAL` or `/t VAL` | Set **temperature** to _VAL_                                                |
-| `/p VAL`                | Set **top_p** to _VAL_                                                      |
-| `/k VAL`                | Set **top_k** to _VAL_                                                      |
+| `/min VAL`              | Set **min_new_tokens** to VALb                                              |
+| `/max VAL`              | Set **max_new_tokens** to VAL                                               |
+| `/temp VAL` or `/t VAL` | Set **temperature** to VAL                                                  |
+| `/p VAL`                | Set **top_p** to VAL                                                        |
+| `/k VAL`                | Set **top_k** to VAL                                                        |
 | `/params` `/settings`   | Show current generation parameters                                          |
 | `/r`                    | Randomize parameters (short-range defaults)                                 |
 | `/rh`                   | Randomize parameters with **high variance** (wider temp/top_p/top_k ranges) |
