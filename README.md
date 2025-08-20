@@ -53,7 +53,7 @@ Or install manually:
 pip install torch transformers peft bitsandbytes prompt_toolkit rich
 ```
 
-# Optional dependencies
+## Optional dependencies
 
 If using GGUF (llama.cpp models):
 
