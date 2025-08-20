@@ -15,6 +15,9 @@ Key Features:
     • Configurable prompt modes (system prompt, assistant prompt, blank mode)
     • Short-preference generation with extension until EOS
     • Optional code detection and filtering
+    • Extension flow: prefer short replies (40–75 tokens) but extend until EOS for natural endings
+    • /stop command: toggle stopping further extension mid-generation
+    • /r and /rh commands: randomize generation parameters (normal or high variance) on the fly
 
 Arguments:
     -hs, --history                  History and message context (default: enabled)
