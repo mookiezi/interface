@@ -576,6 +576,15 @@ if os.path.exists(output_path):
             break
         i += 1
 
+if os.path.exists(output_path):
+    i = 1
+    while True:
+        numbered = os.path.join(output_dir, f"{folder_name}_{i}.txt")
+        if not os.path.exists(numbered):
+            output_path = numbered
+            break
+        i += 1
+
 if tokenizer:
     if DEEPHERMES:
         reserved_special_ids = [
