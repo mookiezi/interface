@@ -594,7 +594,7 @@ def log(text):
     now = datetime.now().strftime("%Y-%m-%d %H:%M:%S")
     print(colorize(text))
     with open(output_path, "a", encoding="utf-8") as f:
-        f.write(f"[{now}] {text}\n\n────────────────────────────────────────────────────────────────────────────\n\n")
+        f.write(f"[{now}]\n{text}\n\n────────────────────────────────────────────────────────────────────────────\n\n")
 
 def justlog(text):
     now = datetime.now().strftime("%Y-%m-%d %H:%M:%S")
