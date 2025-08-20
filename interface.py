@@ -407,8 +407,8 @@ class CyanPromptStreamer(TextStreamer):
     def on_text(self, text, **kwargs):
         text = strip_begin_of_text(text)
         text = clean_special_tokens(text)
-        text = filter_emojis_keep_first_single(text)
-        text = remove_all_emojis(text)
+        #text = filter_emojis_keep_first_single(text)
+        #text = remove_all_emojis(text)
 
         self.output += text  # capture output
 
