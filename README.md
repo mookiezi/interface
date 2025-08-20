@@ -104,15 +104,15 @@ Feature toggles (defaults in parentheses):
 
 ## Default Parameters
 
--   **MIN_NEW_TOKENS** = 1
--   **MAX_NEW_TOKENS** = `random.randint(40, 75)`
--   **TEMPERATURE** = `random.uniform(0.5, 0.9)`
--   **TOP_P** = `random.uniform(0.7, 0.9)`
--   **TOP_K** = `random.randint(40, 75)`
--   **MIN_P** = 0.08
--   **NO_REPEAT_NGRAM_SIZE** = 3
--   **REPETITION_PENALTY** = 1.2
--   **EOS Handling** = `<|im_end|>` and `tokenizer.eos_token_id` (extension continues until one is reached, or hard cap of 1024 tokens)
+-   MIN_NEW_TOKENS = 1
+-   MAX_NEW_TOKENS = `random.randint(40, 75)`
+-   TEMPERATURE = `random.uniform(0.5, 0.9)`
+-   TOP_P = `random.uniform(0.7, 0.9)`
+-   TOP_K = `random.randint(40, 75)`
+-   MIN_P = 0.08
+-   NO_REPEAT_NGRAM_SIZE = 3
+-   REPETITION_PENALTY = 1.2
+-   EOS Handling = `<|im_end|>` and `tokenizer.eos_token_id` (extension continues until one is reached, or hard cap of 1024 tokens)
 
 ## Commands
 
@@ -120,7 +120,7 @@ Feature toggles (defaults in parentheses):
 | ----------------------- | --------------------------------------------------------------------------- |
 | `/clear` `/reset` `/c`  | Clear conversation history                                                  |
 | `/back` `/b`            | Undo last user+assistant exchange and preview recent history                |
-| `/h VAL`                | Enable Chain-of-Thought with last _VAL_ exchanges (default: all available)  |
+| `/h VAL`                | Enable Chain-of-Thought with last VAL exchanges (default: all available)    |
 | `/d`                    | Disable Chain-of-Thought                                                    |
 | `/min VAL`              | Set **min_new_tokens** to VALb                                              |
 | `/max VAL`              | Set **max_new_tokens** to VAL                                               |
