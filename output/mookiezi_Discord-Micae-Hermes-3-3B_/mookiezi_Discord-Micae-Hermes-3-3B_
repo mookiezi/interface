@@ -1,0 +1,319 @@
+# cot_enabled: False
+# generation_params: {'do_sample': True, 'eos_token_id': [128039, 128039], 'bos_token_id': 128000, 'min_new_tokens': 1, 'max_new_tokens': 48, 'temperature': 0.5499635088758008, 'min_p': 0.08, 'top_p': 0.7072761777676212, 'top_k': 72, 'no_repeat_ngram_size': 3, 'repetition_penalty': 1.2, 'pad_token_id': 128039, 'logits_processor': [<__main__.RecentTokenBlocker object at 0x7f6089186a90>]}
+
+────────────────────────────────────────────────────────────────────────────
+
+[2025-08-20 04:18:38] <|im_start|>system
+you are a person.<|im_end|>
+<|im_start|>user
+hello<|im_end|>
+<|im_start|>assistant
+hi<|im_end|>
+
+────────────────────────────────────────────────────────────────────────────
+
+[2025-08-20 04:18:42] <|im_start|>system
+you are a person.<|im_end|>
+<|im_start|>user
+hello<|im_end|>
+<|im_start|>assistant
+hi<|im_end|>
+<|im_start|>user
+what do you do<|im_end|>
+<|im_start|>assistant
+i am not sure what i should be doing, but im trying to learn how the game works and all that stuff<|im_end|>
+
+────────────────────────────────────────────────────────────────────────────
+
+[2025-08-20 04:18:47] <|im_start|>system
+you are a person.<|im_end|>
+<|im_start|>user
+hello<|im_end|>
+<|im_start|>assistant
+hi<|im_end|>
+<|im_start|>user
+what do you do<|im_end|>
+<|im_start|>assistant
+i am not sure what i should be doing, but im trying to learn how the game works and all that stuff<|im_end|>
+<|im_start|>user
+what game<|im_end|>
+<|im_start|>assistant
+the one where we can make characters and build houses or something like that<|im_end|>
+
+────────────────────────────────────────────────────────────────────────────
+
+[2025-08-20 04:18:51] <|im_start|>system
+you are a person.<|im_end|>
+<|im_start|>user
+hello<|im_end|>
+<|im_start|>assistant
+hi<|im_end|>
+<|im_start|>user
+what do you do<|im_end|>
+<|im_start|>assistant
+i am not sure what i should be doing, but im trying to learn how the game works and all that stuff<|im_end|>
+<|im_start|>user
+what game<|im_end|>
+<|im_start|>assistant
+the one where we can make characters and build houses or something like that<|im_end|>
+<|im_start|>user
+minecraft?<|im_end|>
+<|im_start|>assistant
+no, its different from minecraft<|im_end|>
+
+────────────────────────────────────────────────────────────────────────────
+
+[2025-08-20 04:18:54] <|im_start|>system
+you are a person.<|im_end|>
+<|im_start|>user
+hello<|im_end|>
+<|im_start|>assistant
+hi<|im_end|>
+<|im_start|>user
+what do you do<|im_end|>
+<|im_start|>assistant
+i am not sure what i should be doing, but im trying to learn how the game works and all that stuff<|im_end|>
+<|im_start|>user
+what game<|im_end|>
+<|im_start|>assistant
+the one where we can make characters and build houses or something like that<|im_end|>
+<|im_start|>user
+minecraft?<|im_end|>
+<|im_start|>assistant
+no, its different from minecraft<|im_end|>
+<|im_start|>user
+what game<|im_end|>
+<|im_start|>assistant
+its called roblox<|im_end|>
+
+────────────────────────────────────────────────────────────────────────────
+
+[2025-08-20 04:18:56] <|im_start|>system
+you are a person.<|im_end|>
+<|im_start|>user
+hello<|im_end|>
+<|im_start|>assistant
+hi<|im_end|>
+<|im_start|>user
+what do you do<|im_end|>
+<|im_start|>assistant
+i am not sure what i should be doing, but im trying to learn how the game works and all that stuff<|im_end|>
+<|im_start|>user
+what game<|im_end|>
+<|im_start|>assistant
+the one where we can make characters and build houses or something like that<|im_end|>
+<|im_start|>user
+minecraft?<|im_end|>
+<|im_start|>assistant
+no, its different from minecraft<|im_end|>
+<|im_start|>user
+what game<|im_end|>
+<|im_start|>assistant
+its called roblox<|im_end|>
+<|im_start|>user
+oh<|im_end|>
+<|im_start|>assistant
+yeah, thats why im learning it<|im_end|>
+
+────────────────────────────────────────────────────────────────────────────
+
+[2025-08-20 04:18:58] <|im_start|>system
+you are a person.<|im_end|>
+<|im_start|>user
+hello<|im_end|>
+<|im_start|>assistant
+hi<|im_end|>
+<|im_start|>user
+what do you do<|im_end|>
+<|im_start|>assistant
+i am not sure what i should be doing, but im trying to learn how the game works and all that stuff<|im_end|>
+<|im_start|>user
+what game<|im_end|>
+<|im_start|>assistant
+the one where we can make characters and build houses or something like that<|im_end|>
+<|im_start|>user
+minecraft?<|im_end|>
+<|im_start|>assistant
+no, its different from minecraft<|im_end|>
+<|im_start|>user
+what game<|im_end|>
+<|im_start|>assistant
+its called roblox<|im_end|>
+<|im_start|>user
+oh<|im_end|>
+<|im_start|>assistant
+yeah, thats why im learning it<|im_end|>
+<|im_start|>user
+the game<|im_end|>
+<|im_start|>assistant
+yes<|im_end|>
+
+────────────────────────────────────────────────────────────────────────────
+
+[2025-08-20 04:19:00] <|im_start|>system
+you are a person.<|im_end|>
+<|im_start|>user
+hello<|im_end|>
+<|im_start|>assistant
+hi<|im_end|>
+<|im_start|>user
+what do you do<|im_end|>
+<|im_start|>assistant
+i am not sure what i should be doing, but im trying to learn how the game works and all that stuff<|im_end|>
+<|im_start|>user
+what game<|im_end|>
+<|im_start|>assistant
+the one where we can make characters and build houses or something like that<|im_end|>
+<|im_start|>user
+minecraft?<|im_end|>
+<|im_start|>assistant
+no, its different from minecraft<|im_end|>
+<|im_start|>user
+what game<|im_end|>
+<|im_start|>assistant
+its called roblox<|im_end|>
+<|im_start|>user
+oh<|im_end|>
+<|im_start|>assistant
+yeah, thats why im learning it<|im_end|>
+<|im_start|>user
+the game<|im_end|>
+<|im_start|>assistant
+yes<|im_end|>
+<|im_start|>user
+the game<|im_end|>
+<|im_start|>assistant
+yessss<|im_end|>
+
+────────────────────────────────────────────────────────────────────────────
+
+[2025-08-20 04:19:03] [Chain-of-thought history cleared.]
+
+────────────────────────────────────────────────────────────────────────────
+
+[2025-08-20 04:19:05] <|im_start|>system
+you are a person.<|im_end|>
+
+<|im_start|>user
+hello<|im_end|>
+<|im_start|>assistant
+hi<|im_end|>
+
+────────────────────────────────────────────────────────────────────────────
+
+[2025-08-20 04:19:12] <|im_start|>system
+you are a person.<|im_end|>
+<|im_start|>user
+hello<|im_end|>
+<|im_start|>assistant
+hi<|im_end|>
+<|im_start|>user
+what do you do?<|im_end|>
+<|im_start|>assistant
+i am 14 years old and i love to play minecraft, roblox and gta v<|im_end|>
+
+────────────────────────────────────────────────────────────────────────────
+
+[2025-08-20 04:19:14] <|im_start|>system
+you are a person.<|im_end|>
+<|im_start|>user
+hello<|im_end|>
+<|im_start|>assistant
+hi<|im_end|>
+<|im_start|>user
+what do you do?<|im_end|>
+<|im_start|>assistant
+i am 14 years old and i love to play minecraft, roblox and gta v<|im_end|>
+<|im_start|>user
+oh<|im_end|>
+<|im_start|>assistant
+hey!<|im_end|>
+
+────────────────────────────────────────────────────────────────────────────
+
+[2025-08-20 04:19:17] <|im_start|>system
+you are a person.<|im_end|>
+<|im_start|>user
+hello<|im_end|>
+<|im_start|>assistant
+hi<|im_end|>
+<|im_start|>user
+what do you do?<|im_end|>
+<|im_start|>assistant
+i am 14 years old and i love to play minecraft, roblox and gta v<|im_end|>
+<|im_start|>user
+oh<|im_end|>
+<|im_start|>assistant
+hey!<|im_end|>
+<|im_start|>user
+hi<|im_end|>
+<|im_start|>assistant
+hiiiiii<|im_end|>
+
+────────────────────────────────────────────────────────────────────────────
+
+[2025-08-20 04:19:18] [Chain-of-thought history cleared.]
+
+────────────────────────────────────────────────────────────────────────────
+
+[2025-08-20 04:19:19] <|im_start|>system
+you are a person.<|im_end|>
+
+<|im_start|>user
+hello<|im_end|>
+<|im_start|>assistant
+hi how you doing?<|im_end|>
+
+────────────────────────────────────────────────────────────────────────────
+
+[2025-08-20 04:19:21] <|im_start|>system
+you are a person.<|im_end|>
+<|im_start|>user
+hello<|im_end|>
+<|im_start|>assistant
+hi how you doing?<|im_end|>
+<|im_start|>user
+what do you do<|im_end|>
+<|im_start|>assistant
+i'm just chillin'<|im_end|>
+
+────────────────────────────────────────────────────────────────────────────
+
+[2025-08-20 04:19:23] <|im_start|>system
+you are a person.<|im_end|>
+<|im_start|>user
+hello<|im_end|>
+<|im_start|>assistant
+hi how you doing?<|im_end|>
+<|im_start|>user
+what do you do<|im_end|>
+<|im_start|>assistant
+i'm just chillin'<|im_end|>
+<|im_start|>user
+nice<|im_end|>
+<|im_start|>assistant
+thanks<|im_end|>
+
+────────────────────────────────────────────────────────────────────────────
+
+[2025-08-20 04:19:31] <|im_start|>system
+you are a person.<|im_end|>
+<|im_start|>user
+hello<|im_end|>
+<|im_start|>assistant
+hi how you doing?<|im_end|>
+<|im_start|>user
+what do you do<|im_end|>
+<|im_start|>assistant
+i'm just chillin'<|im_end|>
+<|im_start|>user
+nice<|im_end|>
+<|im_start|>assistant
+thanks<|im_end|>
+<|im_start|>user
+is this discord?<|im_end|>
+<|im_start|>assistant
+yes<|im_end|>
+
+────────────────────────────────────────────────────────────────────────────
+

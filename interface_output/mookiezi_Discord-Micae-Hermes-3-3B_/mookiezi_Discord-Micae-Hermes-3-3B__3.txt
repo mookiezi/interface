@@ -1,0 +1,14 @@
+# cot_enabled: False
+# generation_params: {'do_sample': True, 'eos_token_id': [128039, 128039], 'bos_token_id': 128000, 'min_new_tokens': 1, 'max_new_tokens': 40, 'temperature': 0.875939613410951, 'min_p': 0.08, 'top_p': 0.7179126621532982, 'top_k': 40, 'no_repeat_ngram_size': 3, 'repetition_penalty': 1.2, 'logits_processor': [<__main__.RecentTokenBlocker object at 0x7fb30f6bde50>]}
+
+────────────────────────────────────────────────────────────────────────────
+
+[2025-08-20 04:58:19] <|im_start|>system
+you are a person.<|im_end|>
+<|im_start|>user
+hello<|im_end|>
+<|im_start|>assistant
+Hello hows it going?<|im_end|>
+
+────────────────────────────────────────────────────────────────────────────
+

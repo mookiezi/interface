@@ -29,20 +29,31 @@ Supports both quantized and full-precision models, optional Chain-of-Thought (Co
 
     -   Multi-line input with `prompt_toolkit`
     -   Persistent conversation history (`/back`, `/clear`)
-    -   Runtime parameter adjustment (`/min`, `/max`, `/temp`, `/p`, `/k`)
+    -   Runtime parameter adjustment (`/min`, `/max`, `/temp`, `/p`, `/k`, `/r`, `/rh`)
 
 -   **Streaming Output**
     -   Token-by-token display with **Rich** coloring
     -   Emoji filtering and cleanup
     -   Automatic lowercasing rules
+    -   **EOS-Aware Extension:** starts with a short randomized budget (40–75 tokens), then automatically extends generation in steps (64 tokens) until `<|im_end|>` or EOS is reached, a hard cap (1024 tokens), or manual `/stop` is triggered
 
 ---
 
 ## Installation
 
+Install with `requirements.txt`:
+
+```
+pip install -r requirements.txt
+```
+
+Or install manually:
+
 ```
 pip install torch transformers peft bitsandbytes prompt_toolkit rich
 ```
+
+# Optional dependencies
 
 If using GGUF (llama.cpp models):
 
@@ -64,44 +75,62 @@ usage: interface.py [-h] [-c] [-m MODEL]
                     [--custom-tokens]
 
 optional arguments:
-  -h, --help                Show this help message and exit
-  -c, --cot                 Disable chain-of-thought message context (default: enabled)
-  -m MODEL, --model MODEL   Model path or Hugging Face repo ID
+    -h, --help                Show this help message and exit
+    -m MODEL, --model MODEL   Model path or Hugging Face repo ID
                             (default: mookiezi/Discord-Micae-8B-Preview)
 
 Feature toggles (defaults in parentheses):
-  --deephermes               Enable DeepHermes formatting instead of ChatML (False)
-  --gguf                     Use GGUF model format (llama.cpp backend) (False)
-  --gguf-chat-format FORMAT  Chat format for GGUF models (chatml)
-  --blank                    Use only raw user input (no prompts/system context) (False)
-  --assistant-system-combo   Include both system and assistant system prompts (False)
-  --assistant-system         Use assistant system prompt instead of standard (False)
-  --just-system-prompt       Use only the system prompt with user input (False)
-  --no-system-prompt         Do not include system prompt (False)
-  --no-assistant-prompt      Do not include assistant prompt (False)
-  --code-check               Enable code detection and filtering via classifier (False)
-  --quantization             Enable bitsandbytes quantization (True)
-  --bnb-4bit                 Load model in 4-bit mode (True)
-  --bnb-8bit                 Load model in 8-bit mode (False)
-  --custom-tokens            Add extra special tokens to tokenizer (False)
+    -hs, --history                  History and message context (default: enabled)
+    -fl, --frozen_lora              Model path or Hugging Face repo ID of the base LoRa adatper to load and freeze
+    -c, --checkpoint                Model path or Hugging Face repo ID of the LorA adapter to load
+    -chs, --checkpoint_subfolder    Subfolder of the path or Hugging Face repo ID of the LorA adapter to load")
+    --deephermes                    Enable DeepHermes formatting instead of ChatML (default: False)
+    --gguf                          Use GGUF model format with llama.cpp backend (default: False)
+    --gguf-chat-format              Chat format for GGUF models (default: "chatml")
+    --blank                         Raw user input only, no prompts/system context (default: False)
+    -asc, --assistant-system-combo  Include both system and assistant system prompts (default: False)
+    -as, --assistant-system         Use assistant system prompt instead of standard (default: False)
+    --just-system-prompt            Use only the system prompt with user input (default: False)
+    --no-system-prompt              Do not include system prompt (default: False)
+    --no-assistant-prompt           Do not include assistant prompt (default: False)
+    --code-check                    Enable code detection and filtering via classifier (default: False)
+    --quantization                  Enable bitsandbytes quantization (default: True)
+    --bnb-4bit                      Load model in 4-bit mode (default: True)
+    --bnb-8bit                      Load model in 8-bit mode (default: False)
+    --custom-tokens                 Add extra special tokens to tokenizer (default: False)
 ```
 
 ---
 
+## Default Parameters
+
+-   **MIN_NEW_TOKENS** = 1
+-   **MAX_NEW_TOKENS** = `random.randint(40, 75)`
+-   **TEMPERATURE** = `random.uniform(0.5, 0.9)`
+-   **TOP_P** = `random.uniform(0.7, 0.9)`
+-   **TOP_K** = `random.randint(40, 75)`
+-   **MIN_P** = 0.08
+-   **NO_REPEAT_NGRAM_SIZE** = 3
+-   **REPETITION_PENALTY** = 1.2
+-   **EOS Handling** = `<|im_end|>` and `tokenizer.eos_token_id` (extension continues until one is reached, or hard cap of 1024 tokens)
+
 ## Commands
 
-| Command                | Description                        |
-| ---------------------- | ---------------------------------- |
-| `/clear` `/reset` `/c` | Clear conversation history         |
-| `/back` `/b`           | Undo last exchange                 |
-| `/h VAL`               | Enable CoT with last _VAL_ exchanges |
-| `/d`                   | Disable CoT                        |
-| `/min VAL`             | Set min_new_tokens to _VAL_        |
-| `/max VAL`             | Set max_new_tokens to _VAL_        |
-| `/temp` or `/t VAL`    | Set temperature to _VAL_           |
-| `/p VAL`               | Set top_p to _VAL_                 |
-| `/k VAL`               | Set top_k to _VAL_                 |
-| `/params`              | Show current generation parameters |
+| Command                 | Description                                                                 |
+| ----------------------- | --------------------------------------------------------------------------- |
+| `/clear` `/reset` `/c`  | Clear conversation history                                                  |
+| `/back` `/b`            | Undo last user+assistant exchange and preview recent history                |
+| `/h VAL`                | Enable Chain-of-Thought with last _VAL_ exchanges (default: all available)  |
+| `/d`                    | Disable Chain-of-Thought                                                    |
+| `/min VAL`              | Set **min_new_tokens** to _VAL_                                             |
+| `/max VAL`              | Set **max_new_tokens** to _VAL_                                             |
+| `/temp VAL` or `/t VAL` | Set **temperature** to _VAL_                                                |
+| `/p VAL`                | Set **top_p** to _VAL_                                                      |
+| `/k VAL`                | Set **top_k** to _VAL_                                                      |
+| `/params` `/settings`   | Show current generation parameters                                          |
+| `/r`                    | Randomize parameters (short-range defaults)                                 |
+| `/rh`                   | Randomize parameters with **high variance** (wider temp/top_p/top_k ranges) |
+| `/stop`                 | Toggle extension **ON/OFF** (controls continuation beyond initial budget)   |
 
 ---
 

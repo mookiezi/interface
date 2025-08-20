@@ -1,0 +1,10 @@
+torch
+transformers
+peft
+bitsandbytes
+prompt_toolkit
+rich
+huggingface_hub
+
+# Optional: GGUF / llama.cpp models
+# llama-cpp-python

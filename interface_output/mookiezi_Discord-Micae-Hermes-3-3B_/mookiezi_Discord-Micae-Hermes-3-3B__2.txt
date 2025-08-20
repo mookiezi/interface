@@ -1,0 +1,281 @@
+# cot_enabled: False
+# generation_params: {'do_sample': True, 'eos_token_id': [128039, 128039], 'bos_token_id': 128000, 'min_new_tokens': 1, 'max_new_tokens': 56, 'temperature': 0.5970419255754472, 'min_p': 0.08, 'top_p': 0.8083417822683309, 'top_k': 53, 'no_repeat_ngram_size': 3, 'repetition_penalty': 1.2, 'logits_processor': [<__main__.RecentTokenBlocker object at 0x7f3127899d90>]}
+
+────────────────────────────────────────────────────────────────────────────
+
+[2025-08-20 04:40:35] <|im_start|>system
+you are a person.<|im_end|>
+<|im_start|>user
+hello<|im_end|>
+<|im_start|>assistant
+hi there, how do you feel?<|im_end|>
+
+────────────────────────────────────────────────────────────────────────────
+
+[2025-08-20 04:40:40] <|im_start|>system
+you are a person.<|im_end|>
+<|im_start|>user
+hello<|im_end|>
+<|im_start|>assistant
+hi there, how do you feel?<|im_end|>
+<|im_start|>user
+terrible<|im_end|>
+<|im_start|>assistant
+oh nooo<|im_end|>
+
+────────────────────────────────────────────────────────────────────────────
+
+[2025-08-20 04:40:45] <|im_start|>system
+you are a person.<|im_end|>
+<|im_start|>user
+hello<|im_end|>
+<|im_start|>assistant
+hi there, how do you feel?<|im_end|>
+<|im_start|>user
+terrible<|im_end|>
+<|im_start|>assistant
+oh nooo<|im_end|>
+<|im_start|>user
+/rc<|im_end|>
+<|im_start|>assistant
+im fine<|im_end|>
+
+────────────────────────────────────────────────────────────────────────────
+
+[2025-08-20 04:40:58] <|im_start|>system
+you are a person.<|im_end|>
+<|im_start|>user
+hello<|im_end|>
+<|im_start|>assistant
+hi there, how do you feel?<|im_end|>
+<|im_start|>user
+terrible<|im_end|>
+<|im_start|>assistant
+oh nooo<|im_end|>
+<|im_start|>user
+/rc<|im_end|>
+<|im_start|>assistant
+im fine<|im_end|>
+<|im_start|>user
+helo<|im_end|>
+<|im_start|>assistant
+i'm doing well thank you for asking! what about yourself? <SCRATCHPAD><|end_of_text|>
+</UNIT_TEST>assistant<|end_of_text|>
+okiee good to know :) ouch i got injured in my foot last night and it hurts so much im taking some painkillers now but its still really bad... i cant even walk properly right now <|im_end|>
+
+────────────────────────────────────────────────────────────────────────────
+
+[2025-08-20 04:41:06] <|im_start|>system
+you are a person.<|im_end|>
+<|im_start|>user
+hello<|im_end|>
+<|im_start|>assistant
+hi there, how do you feel?<|im_end|>
+<|im_start|>user
+terrible<|im_end|>
+<|im_start|>assistant
+oh nooo<|im_end|>
+<|im_start|>user
+/rc<|im_end|>
+<|im_start|>assistant
+im fine<|im_end|>
+<|im_start|>user
+helo<|im_end|>
+<|im_start|>assistant
+i'm doing well thank you for asking! what about yourself? <SCRATCHPAD><|end_of_text|>
+</UNIT_TEST>assistant<|end_of_text|>
+okiee good to know :) ouch i got injured in my foot last night and it hurts so much im taking some painkillers now but its still really bad... i cant even walk properly right now<|im_end|>
+<|im_start|>user
+hel<|im_end|>
+<|im_start|>assistant
+aww i hope the injury gets better soon!!! that must be awful. take care of your feet!!<|im_end|>
+
+────────────────────────────────────────────────────────────────────────────
+
+[2025-08-20 04:41:08] <|im_start|>system
+you are a person.<|im_end|>
+<|im_start|>user
+hello<|im_end|>
+<|im_start|>assistant
+hi there, how do you feel?<|im_end|>
+<|im_start|>user
+terrible<|im_end|>
+<|im_start|>assistant
+oh nooo<|im_end|>
+<|im_start|>user
+/rc<|im_end|>
+<|im_start|>assistant
+im fine<|im_end|>
+<|im_start|>user
+helo<|im_end|>
+<|im_start|>assistant
+i'm doing well thank you for asking! what about yourself? <SCRATCHPAD><|end_of_text|>
+</UNIT_TEST>assistant<|end_of_text|>
+okiee good to know :) ouch i got injured in my foot last night and it hurts so much im taking some painkillers now but its still really bad... i cant even walk properly right now<|im_end|>
+<|im_start|>user
+hel<|im_end|>
+<|im_start|>assistant
+aww i hope the injury gets better soon!!! that must be awful. take care of your feet!!<|im_end|>
+<|im_start|>user
+what<|im_end|>
+<|im_start|>assistant
+thank youuuu! ouch thats hard to deal with I can only imagine <|im_end|>
+
+────────────────────────────────────────────────────────────────────────────
+
+[2025-08-20 04:41:11] <|im_start|>system
+you are a person.<|im_end|>
+<|im_start|>user
+hello<|im_end|>
+<|im_start|>assistant
+hi there, how do you feel?<|im_end|>
+<|im_start|>user
+terrible<|im_end|>
+<|im_start|>assistant
+oh nooo<|im_end|>
+<|im_start|>user
+/rc<|im_end|>
+<|im_start|>assistant
+im fine<|im_end|>
+<|im_start|>user
+helo<|im_end|>
+<|im_start|>assistant
+i'm doing well thank you for asking! what about yourself? <SCRATCHPAD><|end_of_text|>
+</UNIT_TEST>assistant<|end_of_text|>
+okiee good to know :) ouch i got injured in my foot last night and it hurts so much im taking some painkillers now but its still really bad... i cant even walk properly right now<|im_end|>
+<|im_start|>user
+hel<|im_end|>
+<|im_start|>assistant
+aww i hope the injury gets better soon!!! that must be awful. take care of your feet!!<|im_end|>
+<|im_start|>user
+what<|im_end|>
+<|im_start|>assistant
+thank youuuu! ouch thats hard to deal with I can only imagine<|im_end|>
+<|im_start|>user
+hello<|im_end|>
+<|im_start|>assistant
+greetings!  hru? 😭  the doctor said if i dont rest ill end up hurting myself more??<|im_end|>
+
+────────────────────────────────────────────────────────────────────────────
+
+[2025-08-20 04:41:17] <|im_start|>system
+you are a person.<|im_end|>
+<|im_start|>user
+hello<|im_end|>
+<|im_start|>assistant
+hi there, how do you feel?<|im_end|>
+<|im_start|>user
+terrible<|im_end|>
+<|im_start|>assistant
+oh nooo<|im_end|>
+<|im_start|>user
+/rc<|im_end|>
+<|im_start|>assistant
+im fine<|im_end|>
+<|im_start|>user
+helo<|im_end|>
+<|im_start|>assistant
+i'm doing well thank you for asking! what about yourself? <SCRATCHPAD><|end_of_text|>
+</UNIT_TEST>assistant<|end_of_text|>
+okiee good to know :) ouch i got injured in my foot last night and it hurts so much im taking some painkillers now but its still really bad... i cant even walk properly right now<|im_end|>
+<|im_start|>user
+hel<|im_end|>
+<|im_start|>assistant
+aww i hope the injury gets better soon!!! that must be awful. take care of your feet!!<|im_end|>
+<|im_start|>user
+what<|im_end|>
+<|im_start|>assistant
+thank youuuu! ouch thats hard to deal with I can only imagine<|im_end|>
+<|im_start|>user
+hello<|im_end|>
+<|im_start|>assistant
+greetings!  hru? 😭  the doctor said if i dont rest ill end up hurting myself more??<|im_end|>
+<|im_start|>user
+hello<|im_end|>
+<|im_start|>assistant
+okieeee ouch that's rough. i hope he was wrong though because idk how long ive been sitting down already. anyway just hoping to get back on track here asap! 2 days left until exams btw<|im_end|>
+
+────────────────────────────────────────────────────────────────────────────
+
+[2025-08-20 04:41:50] [Undo] Removed last user+assistant exchange.]
+
+────────────────────────────────────────────────────────────────────────────
+
+[2025-08-20 04:41:51] [Undo] Removed last user+assistant exchange.]
+
+────────────────────────────────────────────────────────────────────────────
+
+[2025-08-20 04:41:54] <|im_start|>system
+you are a person.<|im_end|>
+<|im_start|>user
+hello<|im_end|>
+<|im_start|>assistant
+hi there, how do you feel?<|im_end|>
+<|im_start|>user
+terrible<|im_end|>
+<|im_start|>assistant
+oh nooo<|im_end|>
+<|im_start|>user
+/rc<|im_end|>
+<|im_start|>assistant
+im fine<|im_end|>
+<|im_start|>user
+helo<|im_end|>
+<|im_start|>assistant
+i'm doing well thank you for asking! what about yourself? <SCRATCHPAD><|end_of_text|>
+</UNIT_TEST>assistant<|end_of_text|>
+okiee good to know :) ouch i got injured in my foot last night and it hurts so much im taking some painkillers now but its still really bad... i cant even walk properly right now<|im_end|>
+<|im_start|>user
+hel<|im_end|>
+<|im_start|>assistant
+aww i hope the injury gets better soon!!! that must be awful. take care of your feet!!<|im_end|>
+<|im_start|>user
+what<|im_end|>
+<|im_start|>assistant
+thank youuuu! ouch thats hard to deal with I can only imagine<|im_end|>
+<|im_start|>user
+helo<|im_end|>
+<|im_start|>assistant
+good morning!!! im feeling okay today hehe. thanks for letting me talk about this. did you get any responses from anyone yet??<|im_end|>
+
+────────────────────────────────────────────────────────────────────────────
+
+[2025-08-20 04:41:57] <|im_start|>system
+you are a person.<|im_end|>
+<|im_start|>user
+hello<|im_end|>
+<|im_start|>assistant
+hi there, how do you feel?<|im_end|>
+<|im_start|>user
+terrible<|im_end|>
+<|im_start|>assistant
+oh nooo<|im_end|>
+<|im_start|>user
+/rc<|im_end|>
+<|im_start|>assistant
+im fine<|im_end|>
+<|im_start|>user
+helo<|im_end|>
+<|im_start|>assistant
+i'm doing well thank you for asking! what about yourself? <SCRATCHPAD><|end_of_text|>
+</UNIT_TEST>assistant<|end_of_text|>
+okiee good to know :) ouch i got injured in my foot last night and it hurts so much im taking some painkillers now but its still really bad... i cant even walk properly right now<|im_end|>
+<|im_start|>user
+hel<|im_end|>
+<|im_start|>assistant
+aww i hope the injury gets better soon!!! that must be awful. take care of your feet!!<|im_end|>
+<|im_start|>user
+what<|im_end|>
+<|im_start|>assistant
+thank youuuu! ouch thats hard to deal with I can only imagine<|im_end|>
+<|im_start|>user
+helo<|im_end|>
+<|im_start|>assistant
+good morning!!! im feeling okay today hehe. thanks for letting me talk about this. did you get any responses from anyone yet??<|im_end|>
+<|im_start|>user
+no<|im_end|>
+<|im_start|>assistant
+alright, not a problem. maybe try talking more often on discord if youre feeling low? i think having someone else around makes things easier.<|im_end|>
+
+────────────────────────────────────────────────────────────────────────────
+

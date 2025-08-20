@@ -1,70 +1,3 @@
-"""
-interface.py - Discord-Micae Model Chat Interface
-
-Description:
-    This script provides an interactive CLI for chatting with Hugging Face language models,
-    designed for Discord-style conversational flow. It supports both Transformers and GGUF
-    (llama.cpp) models, with optional LoRA adapter loading and bitsandbytes quantization.
-
-Key Features:
-    • Interactive multi-line prompt entry with `prompt_toolkit`
-    • Chain-of-thought context management with enable/disable commands
-    • On-the-fly generation parameter tuning (/min, /max, /temp, /p, /k)
-    • Rich-colored streaming token output
-    • Emoji filtering and cleanup
-    • Configurable prompt modes (system prompt, assistant prompt, blank mode)
-    • Short-preference generation with extension until EOS
-    • Optional code detection and filtering
-
-Arguments:
-    -hs, --history                  History and message context (default: enabled)
-    -m, --model                     Model path or Hugging Face repo ID (default: mookiezi/Discord-Micae-8B-Preview)
-    -fl, --frozen_lora              Model path or Hugging Face repo ID of the base LoRa adatper to load and freeze
-    -c, --checkpoint                Model path or Hugging Face repo ID of the LorA adapter to load
-    -chs, --checkpoint_subfolder    Subfolder of the path or Hugging Face repo ID of the LorA adapter to load")
-    --deephermes                    Enable DeepHermes formatting instead of ChatML (default: False)
-    --gguf                          Use GGUF model format with llama.cpp backend (default: False)
-    --gguf-chat-format              Chat format for GGUF models (default: "chatml")
-    --blank                         Raw user input only, no prompts/system context (default: False)
-    -asc, --assistant-system-combo  Include both system and assistant system prompts (default: False)
-    -as, --assistant-system         Use assistant system prompt instead of standard (default: False)
-    --just-system-prompt            Use only the system prompt with user input (default: False)
-    --no-system-prompt              Do not include system prompt (default: False)
-    --no-assistant-prompt           Do not include assistant prompt (default: False)
-    --code-check                    Enable code detection and filtering via classifier (default: False)
-    --quantization                  Enable bitsandbytes quantization (default: True)
-    --bnb-4bit                      Load model in 4-bit mode (default: True)
-    --bnb-8bit                      Load model in 8-bit mode (default: False)
-    --custom-tokens                 Add extra special tokens to tokenizer (default: False)
-
-Usage:
-    python interface.py -m mookiezi/Discord-Micae-8B-Preview
-    python interface.py --gguf --gguf-chat-format alpaca
-    python interface.py --blank
-"""
-
-# MIT License
-# 
-# Copyright (c) 2025 mookziei
-# 
-# Permission is hereby granted, free of charge, to any person obtaining a copy
-# of this software and associated documentation files (the "Software"), to deal
-# in the Software without restriction, including without limitation the rights
-# to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
-# copies of the Software, and to permit persons to whom the Software is
-# furnished to do so, subject to the following conditions:
-# 
-# The above copyright notice and this permission notice shall be included in all
-# copies or substantial portions of the Software.
-# 
-# THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
-# IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
-# FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
-# AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
-# LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
-# OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
-# SOFTWARE.
-
 #!/usr/bin/env python3
 import os
 os.environ["PYTORCH_CUDA_ALLOC_CONF"] = "expandable_segments:True"
@@ -94,8 +27,8 @@ import argparse
 
 parser = argparse.ArgumentParser(description="HuggingFace Model Chat Interface")
 
-parser.add_argument("-hs", "--history", action="store_true",  default=True,
-                    help="History and message context (default: enabled)")
+parser.add_argument("-hs", "--history", action="store_true",
+                    help="Disable chain-of-thought message context (default: enabled)")
 parser.add_argument("-m", "--model", default="NousResearch/Hermes-3-Llama-3.1-8B",
                     help="Model path or Hugging Face repo ID")
 parser.add_argument("-fl", "--frozen_lora",
@@ -558,10 +491,7 @@ if not GGUF:
 if CODE_CHECK:
     classifier = pipeline("zero-shot-classification", model="facebook/bart-large-mnli")
 
-if checkpoint_path:
-    folder_name = f"{base_model_name.replace('/', '_')}_{os.path.basename(checkpoint_path).replace('/', '_')}"
-else:
-    folder_name = base_model_name.replace('/', '_')
+folder_name = f"{base_model_name.replace('/', '_')}_{os.path.basename(checkpoint_path).replace('/', '_')}"
 output_dir = os.path.join(os.getcwd(), "interface_output", folder_name)
 os.makedirs(output_dir, exist_ok=True)
 base_filename = folder_name
@@ -712,7 +642,7 @@ with open(output_path, "w", encoding="utf-8") as f:
     f.write(f"# generation_params: {generation_params}\n\n────────────────────────────────────────────────────────────────────────────\n\n")
 
 max_retries = 5
-cot_enabled = args.history
+cot_enabled = not args.history
 cot_max_exchanges = 1000
 cached_history_size = 1000
 
