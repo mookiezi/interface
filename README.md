@@ -32,7 +32,7 @@ Supports both quantized and full-precision models, optional Chain-of-Thought (Co
     -   Runtime parameter adjustment (`/min`, `/max`, `/temp`, `/p`, `/k`, `/r`, `/rh`)
 
 -   **Streaming Output**
-    -   Token-by-token display with **Rich** coloring
+    -   Token-by-token display with Rich coloring
     -   Emoji filtering and cleanup
     -   Automatic lowercasing rules
     -   **EOS-Aware Extension:** starts with a short randomized budget (40–75 tokens), then automatically extends generation in steps (64 tokens) until `<|im_end|>` or EOS is reached, a hard cap (1024 tokens), or manual `/stop` is triggered
