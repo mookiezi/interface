@@ -4,6 +4,7 @@ A Python-based interactive CLI interface for chatting with Hugging Face language
 Supports both quantized and full-precision models, live token streaming with color formatting, and dynamic generation parameter adjustment.
 
 ---
+
 <p align="center">
   <img src="https://github.com/mookiezi/site/blob/main/interface-screenshot.png" alt="Interface Screenshot">
 </p>
