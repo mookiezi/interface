@@ -6,7 +6,7 @@ Supports both quantized and full-precision models, live token streaming with col
 ---
 
 <p align="center">
-  <img src="https://github.com/mookiezi/site/blob/main/interface-screenshot.png" alt="Interface Screenshot">
+  <img src="https://github.com/mookiezi/site/blob/main/interface-screenshot.png?raw=true" alt="Interface Screenshot">
 </p>
 
 ---
