@@ -20,8 +20,9 @@ Key Features:
     • /r and /rh commands: randomize generation parameters (normal or high variance) on the fly
 
 Arguments:
+    --aa, --auto                    Run preset inputs (hello → what do you do → wow tell me more) 3 times with /clear in between, then exit
     -hs, --history                  History and message context (default: enabled)
-    -m, --model                     Model path or Hugging Face repo ID (default: mookiezi/Discord-Micae-8B-Preview)
+    -m, --model                     Model path or Hugging Face repo ID (default: NousResearch/Hermes-3-Llama-3.1-8B)
     -fl, --frozen_lora              Model path or Hugging Face repo ID of the base LoRa adatper to load and freeze
     -c, --checkpoint                Model path or Hugging Face repo ID of the LorA adapter to load
     -chs, --checkpoint_subfolder    Subfolder of the path or Hugging Face repo ID of the LorA adapter to load")
@@ -97,6 +98,8 @@ import argparse
 
 parser = argparse.ArgumentParser(description="HuggingFace Model Chat Interface")
 
+parser.add_argument("-aa", "--auto", action="store_true", default=False,
+                    help="Run preset inputs (hello → what do you do → wow tell me more) 3 times with /clear in between, then exit")
 parser.add_argument("-hs", "--history", action="store_true",  default=True,
                     help="History and message context (default: enabled)")
 parser.add_argument("-m", "--model", default="NousResearch/Hermes-3-Llama-3.1-8B",
@@ -159,14 +162,21 @@ FROZEN_LORA_PATH = None
 checkpoint_path = ""
 checkpoint_subfolder = None
 # ================================
-PLAIN_SYSTEM_PROMPT = """you are a person."""
+PLAIN_SYSTEM_PROMPT = """You are a person."""
 ASSISTANT_SYSTEM_PROMPT = """"""
 # ================================
-MIN_NEW_TOKENS = 1
-MAX_NEW_TOKENS = random.randint(40, 75)
-TEMPERATURE = random.uniform(0.5, 0.9)
-TOP_P = random.uniform(0.7, 0.9)
-TOP_K = random.randint(40, 75)
+if args.auto:
+    MIN_NEW_TOKENS = 4
+    MAX_NEW_TOKENS = 60
+    TEMPERATURE = 0.6
+    TOP_P = 0.9
+    TOP_K = 55
+else:
+    MIN_NEW_TOKENS = random.randint(3, 5)
+    MAX_NEW_TOKENS = random.randint(40, 75)
+    TEMPERATURE = random.uniform(0.5, 0.9)
+    TOP_P = random.uniform(0.7, 0.9)
+    TOP_K = random.randint(40, 50)
 # ================================
 
 # --- Prefer 40–75 tokens, but extend until <|im_end|> (or eos) ---
@@ -309,6 +319,7 @@ def get_generation_params():
         "top_k": TOP_K,
         "no_repeat_ngram_size": 3,
         "repetition_penalty": 1.2,
+        #"pad_token_id": tokenizer.eos_token_id if tokenizer else None,
         "logits_processor": processor_list,
         "do_sample": True
     }
@@ -370,9 +381,13 @@ if GGUF:
     from llama_cpp import Llama
     model = Llama(
         model_path=base_model_name,
-        n_gpu_layers=-1,
-        n_ctx=4096,
-        chat_format=GGUF_CHAT_FORMAT
+        n_gpu_layers=999,          # same as -ngl 999
+        n_ctx=4096,                # same as -c 4096
+        n_batch=2048,              # same as -b 2048
+        n_threads=12,              # same as -t 12
+        chat_format=GGUF_CHAT_FORMAT,
+        use_mmap=True,             # fastest load
+        logits_all=False
     )
     tokenizer = None
 else:
@@ -391,6 +406,8 @@ else:
 
     # ---- normalize config BEFORE ANY model load ----
     cfg = AutoConfig.from_pretrained(base_model_name)
+    if getattr(cfg, "hidden_act", None) == "swiglu":
+        cfg.hidden_act = "silu"
 
     if USE_BASE_MODEL_ONLY:
         if QUANTIZATION:
@@ -565,19 +582,26 @@ if checkpoint_path:
     folder_name = f"{base_model_name.replace('/', '_')}_{os.path.basename(checkpoint_path).replace('/', '_')}"
 else:
     folder_name = base_model_name.replace('/', '_')
-output_dir = os.path.join(os.getcwd(), "interface_output", folder_name)
+output_dir = f"/home/jason/ml/output/{folder_name}"
+auto_dir = "/home/jason/ml/output"
 os.makedirs(output_dir, exist_ok=True)
-base_filename = f"{folder_name}.txt"
-output_path = os.path.join(output_dir, base_filename)
 
-if os.path.exists(output_path):
-    i = 1
-    while True:
-        numbered = os.path.join(output_dir, f"{folder_name}_{i}.txt")
-        if not os.path.exists(numbered):
-            output_path = numbered
-            break
-        i += 1
+if args.auto:
+    base_filename = "auto.txt"
+    output_path = os.path.join(auto_dir, base_filename)
+else:
+    base_filename = f"{folder_name}.txt"
+    output_path = os.path.join(output_dir, base_filename)
+
+    if os.path.exists(output_path):
+        i = 1
+        while True:
+            numbered = os.path.join(output_dir, f"{folder_name}_{i}.txt")
+            if not os.path.exists(numbered):
+                output_path = numbered
+                break
+            i += 1
+
 
 if tokenizer:
     if DEEPHERMES:
@@ -593,6 +617,13 @@ else:
 
 chat_history = []
 
+def cleanup_and_exit():
+    print("\n\033[1;91m[Cleaning up — freeing VRAM]\033[0m")
+    gc.collect()
+    torch.cuda.empty_cache()
+    torch.cuda.reset_peak_memory_stats()
+    raise SystemExit(0)
+
 def log(text):
     now = datetime.now().strftime("%Y-%m-%d %H:%M:%S")
     print(colorize(text))
@@ -601,9 +632,8 @@ def log(text):
 
 def justlog(text):
     now = datetime.now().strftime("%Y-%m-%d %H:%M:%S")
-
     with open(output_path, "a", encoding="utf-8") as f:
-        f.write(f"[{now}] {text}\n\n────────────────────────────────────────────────────────────────────────────\n\n")
+        f.write(f"[{now}]n{text}\n\n────────────────────────────────────────────────────────────────────────────\n\n")
 
 def clean_special_tokens(text: str) -> str:
     text = re.sub(r"<\|im_start\|>", "", text)
@@ -710,21 +740,47 @@ current_prompt = ""
 user_input = ""
 generation_params = get_generation_params()
 
-with open(output_path, "w", encoding="utf-8") as f:
-    f.write(f"# cot_enabled: {args.history}\n")
-    f.write(f"# generation_params: {generation_params}\n\n────────────────────────────────────────────────────────────────────────────\n\n")
+if args.auto:
+    with open(output_path, "a", encoding="utf-8") as f:
+        now = datetime.now().strftime("%Y-%m-%d %H:%M:%S")
+        f.write(f"[{now}]")
+        f.write(f"# model: {base_model_name}\n")
+        f.write(f"# frozen_lora: {FROZEN_LORA_PATH or 'None'}\n")
+        f.write(f"# checkpoint: {checkpoint_path or 'None'}\n")
+        f.write(f"# args: {vars(args)}\n")
+        f.write(f"# cot_enabled: {args.history}\n")
+        f.write(f"# generation_params: {generation_params}\n\n────────────────────────────────────────────────────────────────────────────\n\n")
+
+else:
+    with open(output_path, "w", encoding="utf-8") as f:
+        now = datetime.now().strftime("%Y-%m-%d %H:%M:%S")
+        f.write(f"[{now}]")
+        f.write(f"# model: {base_model_name}\n")
+        f.write(f"# frozen_lora: {FROZEN_LORA_PATH or 'None'}\n")
+        f.write(f"# checkpoint: {checkpoint_path or 'None'}\n")
+        f.write(f"# args: {vars(args)}\n")
+        f.write(f"# cot_enabled: {args.history}\n")
+        f.write(f"# generation_params: {generation_params}\n\n────────────────────────────────────────────────────────────────────────────\n\n")
 
 max_retries = 5
-cot_enabled = args.history
+history_enabled = args.history
 cot_max_exchanges = 1000
 cached_history_size = 1000
 
 if not GGUF:
     print(model.active_adapter)
 
-print(f"🚀 Model launched.")
+else:
+    print(f"🚀 Model launched ({base_model_name})")
+
 
 turn = 0
+
+if args.auto:
+    cycle = ["hello", "what do you do", "wow tell me more", "/clear"]
+    auto_inputs = cycle * 5  # repeat cycle 3 times
+else:
+    auto_inputs = []
 
 #=============
 # START LOOP
@@ -736,7 +792,11 @@ while True:
 
     # print("\033[1;96m>  ", end="", flush=True)
 
-    user_input = session.prompt(multiline=True)
+    if auto_inputs:
+        user_input = auto_inputs.pop(0)
+        print(f"\033[1;96m> {user_input}\033[0m")  # show it like a typed input
+    else:
+        user_input = session.prompt(multiline=True)
     user_input = user_input.strip()
 
     cmd = user_input.lower()
@@ -748,6 +808,10 @@ while True:
         torch.cuda.empty_cache()
         print("\033[1;93m[Chain-of-thought history cleared.]\033[0m")
         log("[Chain-of-thought history cleared.]")
+        # If we're in auto mode and this was the final queued item, exit now.
+        if args.auto and not auto_inputs:
+            print("\n\033[1;92m[Auto mode finished — exiting.]\033[0m")
+            cleanup_and_exit()
         continue
 
     # --- /back (/b): undo last exchange and reprint tail ---
@@ -783,7 +847,7 @@ while True:
     # --- /h (CoT on, optional count) ---
     m = re.match(r"^(/h|!h)(\s+(\d+))?$", cmd)
     if m:
-        cot_enabled = True
+        history_enabled = True
         cot_max_exchanges = int(m.group(3)) if m.group(3) else len(chat_history)
         print(f"\033[1;94m[Chain-of-thought] Using last {cot_max_exchanges} exchanges.]\033[0m")
         log(f"[Chain-of-thought] Using last {cot_max_exchanges} exchanges.]")
@@ -791,84 +855,99 @@ while True:
 
     # --- /d (CoT off) ---
     if cmd in ["/d", "!d"]:
-        cot_enabled = False
+        history_enabled = False
         cot_max_exchanges = 0
         print("\033[1;94m[Chain-of-thought disabled.]\033[0m")
         log("[Chain-of-thought disabled.]")
         continue
 
+    # === Multi-param updates: allow "/k 40 /t 1 /p .7 /min 1 /max 50" in one line ===
+    def apply_param_change(kind: str, val_s: str | None) -> None:
+        """
+        Return: None. Applies a single param change (or toggle) in-place, printing the outcome.
+        Logic: Parses kind/value, clamps where needed, updates globals (min/max/temp/p/k or r/rh/stop).
+        Allowances: Accepts floats like '.7'; /r, /rh, /stop take no value; whitespace is allowed.
+        """
+        global MIN_NEW_TOKENS, MAX_NEW_TOKENS, TEMPERATURE, TOP_P, TOP_K, STOP_EXTENSION
 
-    # === /min /max /temp /t /p and /k for paramsmeter changing on the fly ===
-    m = re.match(r"^/(min|max|temp|t|p|k|r|rh|stop)\s*([0-9]*\.?[0-9]+)?$", cmd)
-    if m:
-        kind = m.group(1)
-        val_s = m.group(2)
-
-        # Commands that don't take a numeric value
-        if val_s is None and kind in ("r", "rh", "stop"):
+        if kind in ("r", "rh", "stop"):
             if kind == "r":
                 randomize()
-                print(f"\033[1;96m[Randomized Parameters]\033[0m")
+                print("\033[1;96m[Randomized Parameters]\033[0m")
             elif kind == "rh":
                 randomize_high_variance()
-                print(f"\033[1;96m[Randomized Parameters: High Variance]\033[0m")
-            else:  # stop
+                print("\033[1;96m[Randomized Parameters: High Variance]\033[0m")
+            else:
                 STOP_EXTENSION = not STOP_EXTENSION
                 print(f"\033[1;94m[Stop extension {'ENABLED' if STOP_EXTENSION else 'DISABLED'}]\033[0m")
-            generation_params = get_generation_params()
-            continue
+            return
 
-        if val_s is None:
+        if val_s is None or not val_s.strip():
+            # No numeric given → just show current params
             show_params()
-            continue
+            return
+
+        # Normalize numbers like ".7" to "0.7"
+        if val_s.startswith("."):
+            val_s = "0" + val_s
 
         try:
-            val = int(float(val_s)) if kind in ("min", "max", "k") else float(val_s)
+            num = float(val_s)
         except ValueError:
             print("\033[1;91m[Error] Invalid number.\033[0m")
-            continue
+            return
 
-        # clamp + assign
         if kind == "min":
-            MIN_NEW_TOKENS = max(0, int(val))
+            MIN_NEW_TOKENS = max(0, int(num))
             if MAX_NEW_TOKENS < MIN_NEW_TOKENS:
                 MAX_NEW_TOKENS = MIN_NEW_TOKENS
             print(f"\033[1;96m[min → {MIN_NEW_TOKENS}]\033[0m")
 
         elif kind == "max":
-            MAX_NEW_TOKENS = max(1, int(val))
+            MAX_NEW_TOKENS = max(1, int(num))
             if MIN_NEW_TOKENS > MAX_NEW_TOKENS:
                 MIN_NEW_TOKENS = MAX_NEW_TOKENS
             print(f"\033[1;96m[max → {MAX_NEW_TOKENS}]\033[0m")
 
         elif kind in ("temp", "t"):
-            TEMPERATURE = max(0.01, min(float(val), 2.0))
+            TEMPERATURE = max(0.01, min(float(num), 2.0))
             print(f"\033[1;96m[temp → {TEMPERATURE:.2f}]\033[0m")
 
         elif kind == "p":
-            TOP_P = max(0.05, min(float(val), 1.0))
+            TOP_P = max(0.05, min(float(num), 1.0))
             print(f"\033[1;96m[p → {TOP_P:.2f}]\033[0m")
 
         elif kind == "k":
-            TOP_K = max(0, int(val))
+            TOP_K = max(0, int(num))
             print(f"\033[1;96m[k → {TOP_K}]\033[0m")
 
 
-        generation_params = get_generation_params()
-        continue
-
-    if cmd in ("/params", "/settings", "/gen"):
-        print(
-            f"\033[1;92m[Params]"
-            f" min={MIN_NEW_TOKENS} | max={MAX_NEW_TOKENS} |"
-            f" temp={TEMPERATURE:.2f} | p={TOP_P:.2f} | k={TOP_K}\033[0m"
+    def parse_and_apply_multi_params(cmd: str) -> bool:
+        """
+        Return: True if at least one /param token was found and applied, else False.
+        Logic: Scans the whole line for repeated tokens /(min|max|temp|t|p|k|r|rh|stop) with optional numbers; applies in order.
+        Allowances: Free spacing; supports floats like '.7'; mixed toggles (/r /rh /stop) with numeric params in one command.
+        """
+        # find all occurrences anywhere in the line
+        pattern = re.compile(
+            r'/(min|max|temp|t|p|k|r|rh|stop)(?:\s+([+-]?(?:\d+(?:\.\d+)?|\.\d+)))?',
+            flags=re.IGNORECASE
         )
-        continue
+        found = False
+        for kind, val in pattern.findall(cmd):
+            found = True
+            apply_param_change(kind.lower(), val if val else None)
+        return found
 
+
+    if parse_and_apply_multi_params(cmd):
+        generation_params = get_generation_params()
+        show_params()
+        continue
 
     limited_history_for_prompt = chat_history[-cached_history_size:]
 
-    if cot_enabled and cot_max_exchanges > 0:
+    if history_enabled and cot_max_exchanges > 0:
         limited_history = limited_history_for_prompt[-cot_max_exchanges:]
         if DEEPHERMES:
             context = "\n".join(
@@ -917,7 +996,7 @@ while True:
     while count_tokens(current_prompt) > 3000 and chat_history:
         chat_history.pop(0)
         limited_history_for_prompt = chat_history[-cached_history_size:]
-        if cot_enabled and cot_max_exchanges > 0:
+        if history_enabled and cot_max_exchanges > 0:
             limited_history = limited_history_for_prompt[-cot_max_exchanges:]
             context = "\n".join(
                 f"<|im_start|>user\n{u}<|im_end|>\n<|im_start|>assistant\n{a}<|im_end|>"
@@ -985,7 +1064,7 @@ while True:
             log(polite_message)
             with open(output_path, "a", encoding="utf-8") as f:
                 f.write(f"{polite_message}\n")
-            if cot_enabled:
+            if history_enabled:
                 chat_history.append((user_input, polite_message))
     else:
         if GGUF:
@@ -1040,6 +1119,12 @@ while True:
         #text = remove_all_emojis(text)
         print(f"\n{consoletext}")
         justlog(logtext)
-        if cot_enabled:
-            chat_history.append((user_input, reply if reply.strip() else streamer.output.strip()))
+        if history_enabled:
+            if not GGUF:
+                chat_history.append((user_input, reply if reply.strip() else streamer.output.strip()))
+            else:
+                chat_history.append((user_input, reply.strip()))
             turn += 1
+            if args.auto and not auto_inputs:
+                print("\n\033[1;92m[Auto mode finished — exiting.]\033[0m")
+                break
