@@ -81,25 +81,23 @@ optional arguments:
     -m MODEL, --model MODEL   Model path or Hugging Face repo ID
                             (default: mookiezii/Discord-Hermes-3-8B)
 
-Feature toggles (defaults in parentheses):
-    -hs, --history                  History and message context (default: enabled)
-    -fl, --frozen_lora              Model path or Hugging Face repo ID of the base LoRa adatper to load and freeze
-    -c, --checkpoint                Model path or Hugging Face repo ID of the LorA adapter to load
-    -chs, --checkpoint_subfolder    Subfolder of the path or Hugging Face repo ID of the LorA adapter to load")
-    --deephermes                    Enable DeepHermes formatting instead of ChatML (default: False)
-    --gguf                          Use GGUF model format with llama.cpp backend (default: False)
+Feature toggles:
+    -m, --model                     Model path or Hugging Face repo ID (default: mookiezii/Discord-Hermes-3-8B)
+    -q, --quant                     Quantization mode: 4 or 8 (default: off). Use `-q` (no value) for 4-bit, or `-q 8` for 8-bit
+    -fl, --frozen-lora              Model path or Hugging Face repo ID of the base LoRa adapter to load and freeze
+    -c, --checkpoint                Model path or Hugging Face repo ID of the LoRa adapter to load
+    -chs, --checkpoint-subfolder    Subfolder of the path or Hugging Face repo ID of the LoRa adapter to load
+    --deephermes                    Enable DeepHermes formatting instead of ChatML
+    --gguf                          Use GGUF model format with llama.cpp backend
     --gguf-chat-format              Chat format for GGUF models (default: "chatml")
-    --blank                         Raw user input only, no prompts/system context (default: False)
-    -asc, --assistant-system-combo  Include both system and assistant system prompts (default: False)
-    -as, --assistant-system         Use assistant system prompt instead of standard (default: False)
-    --just-system-prompt            Use only the system prompt with user input (default: False)
-    --no-system-prompt              Do not include system prompt (default: False)
-    --no-assistant-prompt           Do not include assistant prompt (default: False)
-    --code-check                    Enable code detection and filtering via classifier (default: False)
-    --quantization                  Enable bitsandbytes quantization (default: True)
-    --bnb-4bit                      Load model in 4-bit mode (default: True)
-    --bnb-8bit                      Load model in 8-bit mode (default: False)
-    --custom-tokens                 Add extra special tokens to tokenizer (default: False)
+    --blank                         Raw user input only, no prompts/system context
+    -asc, --assistant-system-combo  Include both system and assistant system prompts
+    -as, --assistant-system         Use assistant system prompt instead of standard
+    --just-system-prompt            Use only the system prompt with user input
+    --no-system-prompt              Do not include system prompt
+    --no-assistant-prompt           Do not include assistant prompt
+    --code-check                    Enable code detection and filtering via classifier
+    -au, --auto                     Run preset inputs (hello → what do you do → wow tell me more) 5 times with /clear in between, then exit
 ```
 
 ---
@@ -118,19 +116,19 @@ Feature toggles (defaults in parentheses):
 
 ## Commands
 
-| Command                 | Description                                                                 |
-| ----------------------- | --------------------------------------------------------------------------- |
-| `/clear` `/reset` `/c`  | Clear conversation history                                                  |
-| `/back` `/b`            | Undo last user+assistant exchange and preview recent history                |
-| `/h VAL`                | Enable Chain-of-Thought with last VAL exchanges (default: all available)    |
-| `/d`                    | Disable Chain-of-Thought                                                    |
-| `/min VAL`              | Set **min_new_tokens** to VALb                                              |
-| `/max VAL`              | Set **max_new_tokens** to VAL                                               |
-| `/temp VAL` or `/t VAL` | Set **temperature** to VAL                                                  |
-| `/p VAL`                | Set **top_p** to VAL                                                        |
-| `/k VAL`                | Set **top_k** to VAL                                                        |
-| `/params` `/settings`   | Show current generation parameters                                          |
-| `/r`                    | Randomize parameters (short-range defaults)                                 |
+| Command                 | Description                                                              |
+| ----------------------- | ---------------------------------------------------------------------------  |
+| `/clear` `/reset` `/c`  | Clear conversation history                                                   |
+| `/back` `/b`            | Undo last user+assistant exchange and preview recent history                 |
+| `/h VAL`                | Enable Chain-of-Thought with last VAL exchanges (default: all available)     |
+| `/d`                    | Disable Chain-of-Thought                                                     |
+| `/min VAL`              | Set **min_new_tokens** to VALb                                               |
+| `/max VAL`              | Set **max_new_tokens** to VAL                                                |
+| `/temp VAL` or `/t VAL` | Set **temperature** to VAL                                                   |
+| `/p VAL`                | Set **top_p** to VAL                                                         |
+| `/k VAL`                | Set **top_k** to VAL                                                         |
+| `/params` `/settings`   | Show current generation parameters                                           |
+| `/r`                    | Randomize parameters (short-range defaults)                                  |
 | `/rh`                   | Randomize parameters with **high variance** (wider temp/top_p/top_k ranges) |
 | `/stop`                 | Toggle extension **ON/OFF** (controls continuation beyond initial budget)   |
 
