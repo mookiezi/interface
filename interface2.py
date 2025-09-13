@@ -1,37 +1,46 @@
 """
 interface.py - Discord-Hermes Model Chat Interface
+
 Description:
     This script provides an interactive CLI for chatting with Hugging Face language models,
     designed for Discord-style conversational flow. It supports both Transformers and GGUF
     (llama.cpp) models, with optional LoRA adapter loading and bitsandbytes quantization.
+
 Key Features & Quick Controls:
     Keyboard Shortcuts:
         • Enter      → submit current input
         • Ctrl+T     → insert newline into the current prompt (multi-line messages)
         • Ctrl+C     → cancel mid-generation or mid-stream and keep partial output
         • Ctrl+Z     → exit cleanly, freeing VRAM and memory
+
     Commands:
         • /clear (/c, /reset, !clear, !c)   → reset all context
         • /back (/b, !b)                    → undo last user+assistant exchange and preview history
         • /h [N] (!h)                       → enable history using last N exchanges (default: all)
         • /d                                → disable history
+
         • On-the-fly parameter tuning:
             /min N     → set min new tokens
             /max N     → set max new tokens
             /temp X    → set temperature
             /p X       → set top-p
             /k N       → set top-k
+
         • Randomization:
             /r         → randomize params
             /rh        → randomize with high variance
+
         • /stop                              → toggle stopping further extension mid-generation
+
     Generation Flow:
         • Extension flow: prefer short replies (min–max tokens) but extend until EOS for natural endings
         • Configurable prompt modes (system prompt, assistant prompt, blank mode)
+
     Advanced:
         • LoRA stacking: frozen base adapter + active adapter support
         • Supports GGUF (llama.cpp) with selectable chat templates (--gguf-chat-format)
         • Optional code detection and filtering with auto-reprompt
+
 Arguments:
     -m, --model                     Model path or Hugging Face repo ID (default: mookiezii/Discord-Hermes-3-8B)
     -q, --quant                     Quantization mode: 4 or 8 (default: off). Use `-q` (no value) for 4-bit, or `-q 8` for 8-bit
@@ -49,11 +58,14 @@ Arguments:
     --no-assistant-prompt           Do not include assistant prompt
     --code-check                    Enable code detection and filtering via classifier
     -au, --auto                     Run preset inputs (hello → what do you do → wow tell me more) 5 times with /clear in between, then exit
+
 Usage (quick help):
     python interface.py -h
+
 USAGE / RECIPES:
   Basic (Transformers, full precision):
     python interface.py -m mookiezii/Discord-Hermes-3-8B
+
   Quantization (Transformers):
     # 4-bit:
     python interface.py -m repo -q
@@ -61,14 +73,17 @@ USAGE / RECIPES:
     python interface.py -m repo -q 8
     # full precision:
     python interface.py -m repo
+
   GGUF (llama.cpp backend):
     python interface.py --gguf -m /path/to/model.gguf --gguf-chat-format chatml
     # alternate chat template:
     python interface.py --gguf -m /path/to/model.gguf --gguf-chat-format alpaca
+
   LoRA (frozen base + active adapter):
     python interface.py -m base/model \
       -fl path/to/frozen_base_lora \
       -c path/to/active_adapter --checkpoint-subfolder adapter_subdir
+
   Prompt modes:
     # Raw user input, no system/assistant prompts:
     python interface.py --blank
@@ -82,9 +97,11 @@ USAGE / RECIPES:
     python interface.py --no-system-prompt
     # Strip assistant prompt entirely:
     python interface.py --no-assistant-prompt
+
   Format toggle:
     # Use DeepHermes formatting instead of ChatML:
     python interface.py --deephermes
+
   Auto run demo + exit:
     python interface.py --auto
 """
@@ -821,8 +838,8 @@ while True:
         chat_history.clear()
         gc.collect()
         torch.cuda.empty_cache()
-        print("\033[1;93m[Chat history cleared.]\033[0m")
-        justlog("[Chat history cleared.]")
+        print("\033[1;93m[History cleared.]\033[0m")
+        log("[Chat history cleared.]")
         # If we're in auto mode and this was the final queued item, exit now.
         if args.auto and not auto_inputs:
             print("\n\033[1;92m[Auto mode finished — exiting.]\033[0m")
@@ -835,7 +852,7 @@ while True:
             u, a = chat_history.pop()
             turn = max(0, turn - 1)
             print("\033[1;93m[Undo] Removed last user+assistant exchange.\033[0m")
-            justlog("[Undo] Removed last user+assistant exchange.]")
+            log("[Undo] Removed last user+assistant exchange.]")
 
             TAIL = 3  # how many exchanges to preview
             tail = chat_history[-TAIL:]
@@ -865,7 +882,7 @@ while True:
         history_enabled = True
         cot_max_exchanges = int(m.group(3)) if m.group(3) else len(chat_history)
         print(f"\033[1;94m[History] Using last {cot_max_exchanges} exchanges.]\033[0m")
-        justlog(f"[Chat history] Using last {cot_max_exchanges} exchanges.]")
+        log(f"[Chat history] Using last {cot_max_exchanges} exchanges.]")
         continue
 
     # --- /d (CoT off) ---
@@ -873,7 +890,7 @@ while True:
         history_enabled = False
         cot_max_exchanges = 0
         print("\033[1;94m[Chat history disabled.]\033[0m")
-        justlog("[Chat history disabled.]")
+        log("[Chat history disabled.]")
         continue
 
     # === Multi-param updates: allow "/k 40 /t 1 /p .7 /min 1 /max 50" in one line ===
