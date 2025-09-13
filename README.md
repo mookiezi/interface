@@ -79,7 +79,7 @@ usage: interface.py [-h] [-c] [-m MODEL]
 optional arguments:
     -h, --help                Show this help message and exit
     -m MODEL, --model MODEL   Model path or Hugging Face repo ID
-                            (default: mookiezi/Discord-Micae-8B-Preview)
+                            (default: mookiezii/Discord-Hermes-3-8B)
 
 Feature toggles (defaults in parentheses):
     -hs, --history                  History and message context (default: enabled)
