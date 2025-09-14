@@ -33,7 +33,7 @@ Key Features & Quick Controls:
         • Supports GGUF (llama.cpp) with selectable chat templates (--gguf-chat-format)
         • Optional code detection and filtering with auto-reprompt
 Arguments:
-    -m, --model                     Model path or Hugging Face repo ID (default: mookiezii/Discord-Hermes-3-8B)
+    -m, --model                     Model path or Hugging Face repo ID (default: mookiezi/Discord-Micae-Hermes-3-3B)
     -q, --quant                     Quantization mode: 4 or 8 (default: off). Use `-q` (no value) for 4-bit, or `-q 8` for 8-bit
     -fl, --frozen-lora              Model path or Hugging Face repo ID of the base LoRa adapter to load and freeze
     -c, --checkpoint                Model path or Hugging Face repo ID of the LoRa adapter to load
@@ -53,7 +53,7 @@ Usage (quick help):
     python interface.py -h
 USAGE / RECIPES:
   Basic (Transformers, full precision):
-    python interface.py -m mookiezii/Discord-Hermes-3-8B
+    python interface.py -m mookiezi/Discord-Micae-Hermes-3-3B
   Quantization (Transformers):
     # 4-bit:
     python interface.py -m repo -q
@@ -140,7 +140,7 @@ parser = argparse.ArgumentParser(description="HuggingFace Model Chat Interface")
 
 parser.add_argument("-au", "--auto", action="store_true",
                     help="Run preset inputs (hello → what do you do → wow tell me more) 5 times with /clear in between, then exit")
-parser.add_argument("-m", "--model", default="mookiezii/Discord-Hermes-3-8B",
+parser.add_argument("-m", "--model", default="mookiezi/Discord-Micae-Hermes-3-3B",
                     help="Model path or Hugging Face repo ID")
 parser.add_argument(
     "-q", "--quant",

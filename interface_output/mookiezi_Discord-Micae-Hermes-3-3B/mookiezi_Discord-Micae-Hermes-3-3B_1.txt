@@ -1,0 +1,18 @@
+[2025-09-14 08:51:49]# model: mookiezi/Discord-Micae-Hermes-3-3B
+# frozen-lora: None
+# checkpoint: None
+# args: {'auto': False, 'model': 'mookiezi/Discord-Micae-Hermes-3-3B', 'quant': '4', 'frozen_lora': None, 'checkpoint': None, 'checkpoint_subfolder': None, 'deephermes': False, 'gguf': False, 'gguf_chat_format': 'chatml', 'blank': False, 'assistant_system_combo': False, 'assistant_system': False, 'just_system_prompt': False, 'no_system_prompt': False, 'no_assistant_prompt': False, 'code_check': False}
+# generation_params: {'do_sample': True, 'eos_token_id': [128039, 128039], 'bos_token_id': 128000, 'min_new_tokens': 4, 'max_new_tokens': 51, 'temperature': 0.8973903910706407, 'top_p': 0.7017401278976126, 'top_k': 49, 'no_repeat_ngram_size': 3, 'repetition_penalty': 1.2, 'logits_processor': [<__main__.RecentTokenBlocker object at 0x7fee8cba97d0>]}
+
+────────────────────────────────────────────────────────────────────────────
+
+[2025-09-14 08:53:54]
+<|im_start|>system
+<|im_end|>
+<|im_start|>user
+hello<|im_end|>
+<|im_start|>assistant
+hey how are you? i'm good, just got a new laptop so my computer is in storage for now.<|im_end|>
+
+────────────────────────────────────────────────────────────────────────────
+
